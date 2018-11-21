@@ -1,0 +1,33 @@
+本书的目标：
+帮助读者最有效地使用Java程序设计语言及其基本类库：java.lang、java.util。
+在某种程度上还包括java.util.concurrent和java.io.
+
+泛型	第5章
+枚举	第30-34条
+注解	第35-37条
+for-each循环	第46条
+自动装箱	第40、49条
+varargs	第42条
+静态导入	第19条
+java.util.concurrent	第68、69条
+
+
+包含许多设计模式(Design Pattern) 和 习惯用法（Idiom）
+反模式（Antipattern）  注释种标注为//Never do this！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

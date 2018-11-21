@@ -1,0 +1,114 @@
+object是一个具体类，但是设计它主要是为了扩展。
+它的所有非final方法(equals、hashCode、toString、clone和finalize)都有明确的通用约定(general contract)。它们被设计成是要覆盖的。
+
+如何覆盖非final的Object方法 + Comparable.compareTo
+
+************************************第8条：覆盖equals时请遵守通用约定****************************
+类的每个实例只与它的自身相等：（不需要覆写的情况）
+1.类的每个实例本质上都是唯一的。
+对于代表活动实体而不是值(value)的类来说确实如此，例如Thread 
+2.不关心类是否提供了“逻辑相等”的测试功能。
+java.util.Random覆盖了equals，以检查两个Random是否产生了相同的随机数序列，但设计者并不认为客户需要或者期望这个功能。
+3.超类已经覆盖了equals，从超类继承过来的行为对子类也是合适的。
+大多数的Set实现都是从AbstractSet继承equals实现，List实现从AbstractList继承equals实现。Map实现从AbstractMap继承equals实现。
+4.类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用。
+@Override
+public boolean equals(Object o){
+	throw new AssertionError();  //Method is never called
+}
+
+什么时候覆盖Object.equals
+类具有自己特有的逻辑相等概念(不等同于对象等同的概念)，而且超类还没有覆盖equals以实现期望的行为。
+
+值类：仅仅是一个表示值的类。例如Integer或者Date。程序员在利用equals方法比较值对象的引用时，希望知道它们在逻辑上是否相等。而不是想了解它们是否指向同一个对象。
+
+覆盖equals方法遵守的约定：JavaSE6：
+equals方法实现了等价关系(equivalence relation):
+1.自反性（reflexive）：对于任何非null的引用值x，x.equals(x)必须返回true
+2.对称性（symmetric）：对于任何非null的引用值x和y，当且仅当y.equals(x)返回true时,x.equals(y)必须返回true。
+3.传递性（transitive）：对于任何非null的引用值x，y，z，如果x.equals(y)返回true，并且y.equals(z)返回true，那么x.equals(z)也必须返回true。
+4.一致性(consistent):多次调用返回一致的结果
+5.对于任何非null的引用值x，x.equals(null)必须返回false；
+
+里氏替换原则(Liskov substitution principle)认为：一个类型的任何重要属性也将适用于它的子类型，因此为该类型编写的任何方法，在它的子类型上也应该运行的很好。
+
+既扩展不可实例化的类，又增加值组件。有一种权宜之计。复合优先于继承。
+
+可以在一个抽象的子类中增加新的值组件，而且不会违反equals约定。
+
+无论类是否可变，都不要让equals方法依赖于不可靠的资源。
+
+实现高质量的equals方法的诀窍：
+1.使用 == 操作符检查“参数是否为这个对象的引用”
+2.使用instanceof操作符检查“参数是否为正确的类型” 参考list 的子抽象类 AbstractList
+3.把参数转换成正确的类型。
+4.对于该类中的每个“关键“域，检查参数中的域是否与该对象中对应的域相匹配。
+
+既不是float也不是double类型的基本类型域，使用==操作符比较；
+对于对象引用域，可以递归的调用equals方法；
+float域，可以使用Float.compare方法，double域，可以使用Double.compare方法。Float.NaN -0.0f等特殊值
+对于数组域，使用Arrays.equals方法
+对于可能为null的域，（field == null ? o.field==null : field.equals(o.field)）
+
+覆盖equals方法时的告诫：
+1.覆盖时总是要覆盖hashcode
+2.不要企图让equal方法过于智能
+3.不要将equals声明中的Object对象替换为其他的类型。
+
+***********************************第9条：覆盖equals时总是要覆盖hashCode***************************
+如果不覆盖hashCode方法，违法了Object.hashCode的通用约定，从而导致该类无法结合所有基于散列的集合一起正常运作。例如HashMap、HashSet和HashTable。
+
+
+***********************************第10条：始终覆盖toString方法*************************************
+toString()
+在实际应用中，toString方法应该返回对象中包含的所有值得关注的信息。理想情况下，字符串应该是自描述的。
+
+实现toString方法：是否在文档中指定返回值的格式。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

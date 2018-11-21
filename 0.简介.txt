@@ -1,0 +1,8 @@
+78条经验规则。 
+java 5 新特性：
+泛型、枚举、注解、自动装箱、for-each循环、可变参数、并发机制，还包括对象、类、类库、方法和序列化这些经典主题。
+
+java 陷阱与缺陷
+
+java 的基本类库：java.lang、 java.util; java.util.concurrent和java.io
+
