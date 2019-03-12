@@ -65,6 +65,31 @@ toString()
 
 实现toString方法：是否在文档中指定返回值的格式。
 
+无论是否指定格式，都为toString返回值中包含的所有信息，提供一种编程式的访问途径。
+
+***************************************第11条：谨慎地覆盖clone***************************************
+Cloneable接口的目的作为对象的一个 mixin 接口(mixin interface)，表明这样的对象允许克隆(clone).
+
+声明式接口：
+Clonable的作用：它决定了Object中受保护的clone方法实现的行为。
+如果一个类实现了Clonable，Object的clone方法就返回该对象的逐域拷贝，否则就会抛出CloneNotSupportedException异常。
+
+**********这是接口的一种极端非典型的用法。
+通常情况下，实现接口是为了表明类可以为它的客户做些什么。但是，对于Clonable接口，它改变了超类中受保护的方法的行为。
+
+Clone方法的约定：
+x.clone() != x   将会是true
+x.clone().getClass() == x.getClass()  将会是true
+x.clone().equals(x) 将会是true
+
+相当于创建类的一个新实例，但它同时也会拷贝内部的数据结构。这个过程没有调用构造器。
+
+约定存在的问题：
+1.不调用构造器  规定太过强硬
+2.x.clone().getClass()通常应该等同于x.getClass()  规定又太软弱了
+
+
+
 
 
 

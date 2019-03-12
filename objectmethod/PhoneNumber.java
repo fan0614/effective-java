@@ -1,4 +1,4 @@
-package effective.createandfinalize.objectmehod;
+package objectmethod;
 
 
 import java.util.HashMap;
